@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Summary</title>
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .attendance-summary-container {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+
+        .attendance-summary {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .absent-list {
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="attendance-summary-container">
+        <h1>Attendance Summary</h1>
+        <div class="attendance-summary">
+            <p id="attendance-count"></p>
+            <p id="attendance-percentage"></p>
+        </div>
+        <div class="absent-list">
+            <h3>Absent Students List:</h3>
+            <ul id="absent-students"></ul>
+        </div>
+        <a href="teacher-dashboard.html" class="btn-back">Back to Dashboard</a>
+    </div>
+
+    <script>
+        // Retrieve the attendance data from localStorage
+        const attendanceData = JSON.parse(localStorage.getItem('attendanceData'));
+
+        const studentNames = [
+            "K Raj Tilak", "MD Riyasat Ali", "Gargee Dash", "Sonali Sahoo", "Ashutosh Sahoo",
+            "Apurba Pal", "Anshuman Nanda", "Bikram Keshari Dash", "Biswajeet Muduli", "Akansha Behera"
+        ];
+
+        if (attendanceData) {
+            const totalStudents = attendanceData.length;
+            const presentCount = attendanceData.filter(status => status).length;
+            const absentCount = totalStudents - presentCount;
+            const attendancePercentage = (presentCount / totalStudents) * 100;
+
+            // Display attendance summary
+            document.getElementById('attendance-count').textContent = `Total Present: ${presentCount} out of ${totalStudents} students.`;
+            document.getElementById('attendance-percentage').textContent = `Attendance Percentage: ${attendancePercentage.toFixed(2)}%`;
+
+            // Display absent students
+            const absentStudents = [];
+            attendanceData.forEach((status, index) => {
+                if (!status) {
+                    absentStudents.push(studentNames[index]);
+                }
+            });
+
+            const absentList = document.getElementById('absent-students');
+            absentStudents.forEach(student => {
+                const listItem = document.createElement('li');
+                listItem.textContent = student;
+                absentList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>

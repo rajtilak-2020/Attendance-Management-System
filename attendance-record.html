@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Graph</title>
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f4f7;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        .chart-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 500px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .summary {
+            text-align: center;
+            margin: 20px auto;
+            background: #007BFF;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            width: 50%;
+            font-size: 18px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        button a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+
+            .summary {
+                width: 90%;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Attendance Overview</h1>
+
+    <div class="chart-container">
+        <canvas id="attendanceGraph"></canvas>
+    </div>
+
+    <div class="summary">
+        <p id="attendanceSummary"></p>
+    </div>
+
+    <button>
+        <a href="student-dashboard.html">Back to Dashboard</a>
+    </button>
+
+    <script>
+        // Generate random attendance data (0 for absent, 1 for present)
+        function generateRandomAttendance(numDays) {
+            let attendanceData = [];
+            for (let i = 0; i < numDays; i++) {
+                attendanceData.push(Math.random() > 0.3 ? 1 : 0); // 70% chance of being present
+            }
+            return attendanceData;
+        }
+
+        // Generate dates from a start date
+        function generateDates(startDate, numDays) {
+            let dates = [];
+            let date = new Date(startDate);
+            for (let i = 0; i < numDays; i++) {
+                dates.push(date.toISOString().split('T')[0]); // Format: YYYY-MM-DD
+                date.setDate(date.getDate() + 1); // Increment by 1 day
+            }
+            return dates;
+        }
+
+        const numDays = 100;
+        const attendanceData = generateRandomAttendance(numDays);
+        const labels = generateDates('2020-01-01', numDays);
+
+        // Calculate attendance statistics
+        const daysPresent = attendanceData.filter(day => day === 1).length;
+        const daysAbsent = numDays - daysPresent;
+        const attendancePercentage = ((daysPresent / numDays) * 100).toFixed(2);
+
+        // Update attendance summary
+        document.getElementById('attendanceSummary').innerHTML = `
+            Total Days: ${numDays}<br>
+            Days Present: ${daysPresent}<br>
+            Days Absent: ${daysAbsent}<br>
+            Attendance: ${attendancePercentage}%
+        `;
+
+        // Create the chart
+        const ctx = document.getElementById('attendanceGraph').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Present Days',
+                    data: attendanceData.map(value => value * 100),
+                    backgroundColor: 'rgba(0, 200, 83, 0.2)',
+                    borderColor: 'rgba(0, 150, 60, 1)',
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgba(0, 150, 60, 1)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw === 100
+                                    ? `Present on ${context.label}`
+                                    : `Absent on ${context.label}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Dates',
+                            color: '#007BFF',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10,
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Attendance Status',
+                            color: '#007BFF',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value === 100 ? 'Present' : 'Absent';
+                            },
+                            stepSize: 50,
+                            max: 100,
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

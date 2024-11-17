@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Attendance Summary</title>
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        .summary {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .absent-list {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Faculty Attendance Summary</h1>
+        <div class="summary" id="attendance-summary">
+            <!-- Summary of attendance will be displayed here -->
+        </div>
+        <div class="absent-list">
+            <h2>Absent Faculty List</h2>
+            <ul id="absent-teachers">
+                <!-- List of absent teachers will be displayed here -->
+            </ul>
+        </div>
+        <a href="admin-dashboard.html">Back to Admin Page</a>
+    </div>
+
+    <script>
+        // Retrieve attendance data from localStorage
+        const attendanceData = JSON.parse(localStorage.getItem('teachattendanceData')) || [];
+
+        // Teacher names
+        const teacherNames = [
+            "Ladu Sir (HOD)",
+            "Jit Sir (HOD repr.)",
+            "Devismita Mam",
+            "Samita Mam",
+            "Niharika Mam",
+            "Biswajeet Sir",
+            "Jyoti Sir",
+            "Jayprakash Sir",
+            "Orpita Mam",
+            "Suvam Sir"
+        ];
+
+        // Calculate attendance summary
+        const totalTeachers = teacherNames.length;
+        const presentTeachers = attendanceData.filter(status => status).length;
+        const absentTeachers = totalTeachers - presentTeachers;
+
+        // Display attendance percentage
+        const attendancePercentage = (presentTeachers / totalTeachers) * 100;
+        const summaryElement = document.getElementById('attendance-summary');
+        summaryElement.textContent = `Total Teachers: ${totalTeachers}, Present: ${presentTeachers}, Absent: ${absentTeachers}, Attendance: ${attendancePercentage.toFixed(2)}%`;
+
+        // Display list of absent teachers
+        const absentTeacherList = document.getElementById('absent-teachers');
+        attendanceData.forEach((status, index) => {
+            if (!status) {
+                const listItem = document.createElement('li');
+                listItem.textContent = teacherNames[index];
+                absentTeacherList.appendChild(listItem);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRIEMS Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Hello, Admin!</h1>
+        <!-- Manage Users Card -->
+        <div class="card">
+            <h2>Manage Users</h2>
+            <p>Add, edit, or remove users from the system.</p>
+            <button onclick="window.location.href='manage-users.html'">Go to User Management</button>
+        </div>
+        <!-- View Attendance Card -->
+        <div class="card">
+            <h2>Faculty Attendance</h2>
+            <p>View or feed attendance reports.</p>
+            <button onclick="window.location.href='teachattendance.html'">Faculty Sheet</button>
+        </div>
+        <!-- Settings Card -->
+        <div class="card">
+            <h2>Settings</h2>
+            <p>Manage system settings and configurations.</p>
+            <button onclick="window.location.href='settings.html'">Manage Syetem</button>
+        </div>
+        <button onclick="window.location.href='index.html'">
+            Back to login page
+        </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!--Start-->
+<!DOCTYPE html>
+<html lang="en">
+    <!--Head-section-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRIEMS CSE Department</title>
+    <link rel="icon" type="image/png" href="mylogo.PNG">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+    <!--Body-section-->
+<body>
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo">
+            <img src="logo.PNG" alt="Logo" />
+        </div>
+        
+        <!-- Login Form -->
+        <form id="loginForm">
+            <h1>DRIEMS Attendance Management System</h1>
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            
+            <label for="role">Role:</label>
+            <select id="role" required>
+                <option value="admin">Administrator</option>
+                <option value="teacher">Faculty</option>
+                <option value="student">Student</option>
+            </select>
+            
+            <button type="submit">Login</button>
+        </form>
+        <div class="footer">
+            <div class="footer-text">
+                <img src="copyright.png" alt="copyright-img" class="images" height="14px"> K Raj Tilak
+            </div>
+           </div>
+    </div>
+
+    <!--javascript-file-->
+    <script src="script.js"></script>
+</body>
+</html>
+<!--End-->

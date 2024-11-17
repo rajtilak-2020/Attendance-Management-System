@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <link rel="stylesheet" href="level2.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .control-panel {
+            margin: 20px auto;
+            width: 80%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-add {
+            background-color: #28a745;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Users</h1>
+    <p>Here you can add, edit, or remove users from the system.</p>
+    <div class="control-panel">
+        <table>
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Users</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Admin</td>
+                    <td id="admin-users">
+                        <span>Admin1</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-add" onclick="addUser('admin-users', 'Admin')">Add</button>
+                        <button class="btn btn-remove" onclick="removeUser('admin-users')">Remove</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Students</td>
+                    <td id="student-users">
+                        <span>Student1</span>, <span>Student2</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-add" onclick="addUser('student-users', 'Student')">Add</button>
+                        <button class="btn btn-remove" onclick="removeUser('student-users')">Remove</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Faculty</td>
+                    <td id="faculty-users">
+                        <span>Teacher1</span>, <span>Teacher2</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-add" onclick="addUser('faculty-users', 'Teacher')">Add</button>
+                        <button class="btn btn-remove" onclick="removeUser('faculty-users')">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="admin-dashboard.html" class="back-btn">Back to Dashboard</a>
+
+    <script>
+        // Function to add a new user
+        function addUser(rowId, role) {
+            const userContainer = document.getElementById(rowId);
+            const newUser = document.createElement('span');
+            const currentCount = userContainer.querySelectorAll('span').length + 1;
+            newUser.textContent = `${role}${currentCount}`;
+            userContainer.appendChild(document.createTextNode(', ')); // Add comma separator
+            userContainer.appendChild(newUser);
+        }
+
+        // Function to remove the last user
+        function removeUser(rowId) {
+            const userContainer = document.getElementById(rowId);
+            const users = userContainer.querySelectorAll('span');
+            if (users.length > 0) {
+                const lastUser = users[users.length - 1];
+                const prevSeparator = lastUser.previousSibling;
+
+                // Remove comma separator and last user
+                if (prevSeparator && prevSeparator.nodeType === Node.TEXT_NODE) {
+                    userContainer.removeChild(prevSeparator);
+                }
+                userContainer.removeChild(lastUser);
+            } else {
+                alert('No users to remove!');
+            }
+        }
+    </script>
+</body>
+</html>

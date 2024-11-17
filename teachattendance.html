@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Sheet</title>
+    <link rel="icon" type="image/png" href="logo.PNG">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .attendance-container {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+
+        .btn-back, .btn-finish {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .btn-back:hover, .btn-finish:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="attendance-container">
+        <h1>Attendance Sheet</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>SR. No</th>
+                    <th>Name of the Teacher</th>
+                    <th>Dept ID</th>
+                    <th>Present/Absent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 10 students -->
+                <tr>
+                    <td>1</td>
+                    <td>Ladu Sir (HOD)</td>
+                    <td>1001</td>
+                    <td><input type="checkbox" name="attendance1"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jit Sir (HOD repr.)</td>
+                    <td>1002</td>
+                    <td><input type="checkbox" name="attendance2"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><Data>Devismita Mam</Data></td>
+                    <td>1003</td>
+                    <td><input type="checkbox" name="attendance3"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Samita Mam</td>
+                    <td>1004</td>
+                    <td><input type="checkbox" name="attendance4"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Niharika Mam</td>
+                    <td>1005</td>
+                    <td><input type="checkbox" name="attendance5"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Biswajeet Sir</td>
+                    <td>1006</td>
+                    <td><input type="checkbox" name="attendance6"></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Jyoti Sir</td>
+                    <td>1007</td>
+                    <td><input type="checkbox" name="attendance7"></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Jayprakash Sir</td>
+                    <td>1008</td>
+                    <td><input type="checkbox" name="attendance8"></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Orpita Mam</td>
+                    <td>1009</td>
+                    <td><input type="checkbox" name="attendance9"></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Suvam Sir</td>
+                    <td>1010</td>
+                    <td><input type="checkbox" name="attendance10"></td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="admin-dashboard.html" class="btn-back">Back to Dashboard</a>
+        <a href="teachattendance-summary.html" class="btn-finish" id="finish-button">Finish</a>
+    </div>
+
+    <script>
+        document.getElementById('finish-button').addEventListener('click', function(event) {
+            // Prevent default link behavior
+            event.preventDefault();
+
+            // Collect the attendance data
+            let attendanceData = [];
+            for (let i = 1; i <= 10; i++) {
+                const checkbox = document.querySelector(`input[name="attendance${i}"]`);
+                attendanceData.push(checkbox.checked); // Store true for present, false for absent
+            }
+
+            // Store the attendance data in localStorage
+            localStorage.setItem('teachattendanceData', JSON.stringify(attendanceData));
+
+            // Redirect to the attendance summary page
+            window.location.href = "teachattendance-summary.html";
+        });
+    </script>
+</body>
+</html>
